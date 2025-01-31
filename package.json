@@ -9,19 +9,14 @@
     "dev": "nextron",
     "build": "nextron build",
     "build:win": "nextron build --win",
-    "build:mac": "nextron build --mac",
     "build:linux": "nextron build --linux",
-    "build:all": "nextron build --win --mac --linux",
+    "build:all": "nextron build --win --linux",
     "postinstall": "electron-builder install-app-deps"
   },
   "build": {
     "appId": "com.example.nextron",
     "productName": "Video Upload App",
     "copyright": "Copyright © 2025",
-    "mac": {
-      "category": "public.app-category.video",
-      "target": ["dmg"]
-    },
     "win": {
       "target": ["nsis"]
     },

@@ -15,12 +15,6 @@ win:
     - target: nsis
       arch:
         - x64
-mac:
-  target:
-    - target: dmg
-      arch:
-        - x64
-        - arm64
 linux:
   target:
     - target: AppImage
@@ -29,3 +23,5 @@ linux:
 nsis:
   oneClick: false
   allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
