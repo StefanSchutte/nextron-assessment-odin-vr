@@ -1,14 +1,42 @@
 {
   "private": true,
   "name": "my-nextron-app",
-  "description": "My application description",
+  "description": "My Video Upload app",
   "version": "1.0.0",
-  "author": "Yoshihide Shiono <shiono.yoshihide@gmail.com>",
+  "author": "Stefan Schutte",
   "main": "app/background.js",
   "scripts": {
     "dev": "nextron",
     "build": "nextron build",
+    "build:win": "nextron build --win",
+    "build:mac": "nextron build --mac",
+    "build:linux": "nextron build --linux",
+    "build:all": "nextron build --win --mac --linux",
     "postinstall": "electron-builder install-app-deps"
+  },
+  "build": {
+    "appId": "com.example.nextron",
+    "productName": "Video Upload App",
+    "copyright": "Copyright © 2025",
+    "mac": {
+      "category": "public.app-category.video",
+      "target": ["dmg"]
+    },
+    "win": {
+      "target": ["nsis"]
+    },
+    "linux": {
+      "target": ["AppImage"],
+      "category": "Video"
+    },
+    "files": [
+      "app/**/*",
+      "main/**/*",
+      "renderer/**/*"
+    ],
+    "directories": {
+      "output": "release"
+    }
   },
   "dependencies": {
     "@aws-amplify/auth": "^6.10.1",
