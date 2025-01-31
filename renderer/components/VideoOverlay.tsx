@@ -77,10 +77,12 @@ const VideoOverlay: React.FC<VideoOverlayProps> = ({ video, onClose }) => {
     };
 
     return (
-        <div
-            className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50"
-            onClick={handleBackdropClick}
-        >
+        <>
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-40"
+             onClick={handleBackdropClick}
+             aria-hidden="true"
+        />
+            <div className="fixed inset-0 flex items-center justify-center z-50">
             <div className="bg-gray-700 rounded-lg w-full max-w-6xl h-[90vh] flex flex-col overflow-hidden relative">
                 {/* Close button */}
                 <button
@@ -197,6 +199,7 @@ const VideoOverlay: React.FC<VideoOverlayProps> = ({ video, onClose }) => {
                 </div>
             </div>
         </div>
+        </>
     );
 };
 
