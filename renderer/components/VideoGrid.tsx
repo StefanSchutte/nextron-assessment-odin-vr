@@ -99,8 +99,15 @@ const VideoCarousel: React.FC = () => {
             }
         });
 
+        const videoListener = Hub.listen('videos', ({ payload }) => {
+            if (payload.event === 'videoUploaded') {
+                checkCurrentUser();
+            }
+        });
+
         return () => {
             unsubscribe();
+            videoListener();
         };
     }, []);
 

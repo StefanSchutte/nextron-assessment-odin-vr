@@ -6,6 +6,7 @@ import { s3Service } from '@/services/s3Service';
 import { v4 as uuidv4 } from 'uuid';
 import { getCurrentUser } from 'aws-amplify/auth';
 import { FormData } from '@/types/types'
+import {Hub} from "aws-amplify/utils";
 
 /**
  * Form component for uploading videos with metadata
@@ -134,6 +135,11 @@ const VideoUploadForm: React.FC = () => {
                     throw new Error(thumbnailUploadResult.error);
                 }
             }
+
+            Hub.dispatch('videos', {
+                event: 'videoUploaded',
+                data: { videoId }
+            });
 
             setFormData({
                 title: '',

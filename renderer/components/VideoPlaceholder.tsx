@@ -9,7 +9,7 @@ import { Video } from 'lucide-react';
 const VideoPlaceholder = () => {
     return (
         <div className="w-full h-full flex items-center justify-center bg-gray-200 rounded-lg">
-            <Video className="w-16 h-16 text-gray-400" />
+            <Video className="w-36 h-36 text-gray-400" />
         </div>
     );
 };
