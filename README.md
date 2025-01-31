@@ -2,6 +2,15 @@
 
 A video platform feature built with Nextron, Next.js and AWS, allowing users to upload, view, rate, and review video content.
 
+## Download Links
+
+### Option 1: Direct Downloads
+- [Windows Version (144 MB)](https://drive.google.com/file/d/1UPiREfzgmbBDdvlWB6YGYs5b2quaO5Ps/view?usp=drive_link)
+- [Linux Version (179 MB)](https://drive.google.com/file/d/1WSB4kKWAAMP_jzv0-IbPRGix_V0jdA2W/view?usp=drive_link)
+
+### Option 2: Google Drive Folder
+Access all distribution files in our [Google Drive folder](https://drive.google.com/drive/folders/1p7KFYtpc_dWhm9PtvYIliBH_F_tYJdml)
+
 ## Features
 
 ### Video Management
@@ -115,6 +124,7 @@ A video platform feature built with Nextron, Next.js and AWS, allowing users to 
 
 #### For a quick preview of the application in action:
 
+- In Download Link section in this readme.
 - Download the zip file
 - Unzip the contents
 - Run the executable file
@@ -169,3 +179,5 @@ $ yarn dev (or `npm run dev` or `pnpm run dev`)
 # production build
 $ yarn build (or `npm run build` or `pnpm run build`)
 ```
+
+
