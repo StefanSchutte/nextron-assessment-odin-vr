@@ -169,8 +169,8 @@ const VideoCarousel: React.FC = () => {
 
     if (loading) {
         return (
-            <div className="flex justify-center items-center min-h-screen">
-                <div className="text-lg">Loading videos...</div>
+            <div className="flex justify-center items-center min-h-screen pt-14">
+                <div className="text-lg -translate-y-32">Loading videos...</div>
             </div>
         );
     }
@@ -185,7 +185,7 @@ const VideoCarousel: React.FC = () => {
 
     return (
         <div className="container mx-auto px-4 py-8">
-            <h2 className="text-2xl font-bold mb-8">Videos</h2>
+            <h2 className="text-2xl font-bold mb-8">Uploaded Videos</h2>
             {videos.length === 0 ? (
                 <div className="text-center text-gray-500">
                     No videos available

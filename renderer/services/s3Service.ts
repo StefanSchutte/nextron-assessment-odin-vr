@@ -221,7 +221,6 @@ class S3Service {
                 throw new Error('Video not found');
             }
 
-            // Delete video file
             if (metadata.videoKey) {
                 await s3Client.send(new DeleteObjectCommand({
                     Bucket: BUCKET_NAME,
@@ -229,7 +228,6 @@ class S3Service {
                 }));
             }
 
-            // Delete thumbnail if exists
             if (metadata.thumbnailKey) {
                 await s3Client.send(new DeleteObjectCommand({
                     Bucket: BUCKET_NAME,
@@ -237,7 +235,6 @@ class S3Service {
                 }));
             }
 
-            // Delete metadata file
             await s3Client.send(new DeleteObjectCommand({
                 Bucket: BUCKET_NAME,
                 Key: `metadata/${videoId}.json`

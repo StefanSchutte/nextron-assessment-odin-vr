@@ -39,7 +39,6 @@ export const ReviewSection: React.FC<ReviewSectionProps> = ({ videoId, currentUs
                 const user = await getCurrentUser();
                 setCurrentUserEmail(user.signInDetails?.loginId || null);
             } catch (err) {
-                toast.error('Please Login!');
                 setCurrentUserEmail(null);
             }
         };

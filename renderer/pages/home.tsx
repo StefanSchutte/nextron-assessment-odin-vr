@@ -14,7 +14,9 @@ export default function HomePage() {
         <title>Nextron Assessment Odin VR</title>
       </Head>
         <div className="min-h-screen">
+            <div className="w-full pt-14">
             <VideoGrid />
+            </div>
         </div>
     </React.Fragment>
   )
