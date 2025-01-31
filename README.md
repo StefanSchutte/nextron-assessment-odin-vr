@@ -12,7 +12,6 @@ A video platform feature built with Nextron, Next.js and AWS, allowing users to 
 Access all distribution files in our [Google Drive folder](https://drive.google.com/drive/folders/1p7KFYtpc_dWhm9PtvYIliBH_F_tYJdml)
 
 ## Features
-
 ### Video Management
 - **Upload Videos**
     - Support for various video formats (mp4, mkv, avi, mov, wmv, flv, webm)
