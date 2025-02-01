@@ -1,4 +1,4 @@
-import { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand, ListObjectsV2Command } from '@aws-sdk/client-s3';
+import { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand, ListObjectsV2Command, HeadObjectCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { Upload } from '@aws-sdk/lib-storage';
 import { ENV } from '@/config/env';
@@ -13,6 +13,7 @@ const s3Client = new S3Client({
 });
 
 const BUCKET_NAME = ENV.AWS_BUCKET_NAME;
+const MAX_STORAGE_BYTES = 4 * 1024 * 1024 * 1024;
 
 if (!ENV.AWS_REGION || !ENV.AWS_ACCESS_KEY_ID || !ENV.AWS_SECRET_ACCESS_KEY) {
     throw new Error('AWS configuration is missing. Please check your environment variables.');
@@ -89,6 +90,11 @@ class S3Service {
      */
     async uploadVideo(file: File, key: string, metadata: Omit<VideoMetadata, 'videoUrl' | 'thumbnailUrl' | 'thumbnailKey' | 'videoKey'>): Promise<UploadResult> {
         try {
+            const withinLimit = await this.checkStorageLimit(file.size);
+            if (!withinLimit) {
+                throw new Error('Upload would exceed 4GB storage limit');
+            }
+
             const videoKey = `videos/${key}`;
             const fileBuffer = await file.arrayBuffer();
 
@@ -249,6 +255,78 @@ class S3Service {
             };
         }
     }
+
+    /**
+     * Calculates the total storage used in the S3 bucket
+     * @private
+     * @async
+     * @returns {Promise<number>} Total storage used in bytes
+     */
+    private async calculateTotalStorage(): Promise<number> {
+        try {
+            const command = new ListObjectsV2Command({
+                Bucket: BUCKET_NAME,
+                Prefix: 'videos/'
+            });
+
+            let totalSize = 0;
+            let isTruncated = true;
+            let continuationToken = undefined;
+
+            while (isTruncated) {
+                const response = await s3Client.send(command);
+
+                if (response.Contents) {
+                    for (const object of response.Contents) {
+                        totalSize += object.Size || 0;
+                    }
+                }
+
+                isTruncated = response.IsTruncated || false;
+                continuationToken = response.NextContinuationToken;
+
+                if (isTruncated && continuationToken) {
+                    command.input.ContinuationToken = continuationToken;
+                }
+            }
+
+            return totalSize;
+        } catch (error) {
+            console.error('Error calculating storage:', error);
+            throw error;
+        }
+    }
+
+    /**
+     * Checks if uploading a file would exceed storage limits
+     * @async
+     * @param {number} fileSize - Size of the file to be uploaded in bytes
+     * @returns {Promise<boolean>} Whether the upload would exceed limits
+     */
+    async checkStorageLimit(fileSize: number): Promise<boolean> {
+        try {
+            const currentStorage = await this.calculateTotalStorage();
+            return (currentStorage + fileSize) <= MAX_STORAGE_BYTES;
+        } catch (error) {
+            console.error('Error checking storage limit:', error);
+            throw error;
+        }
+    }
+
+    /**
+     * Gets current storage usage information
+     * @async
+     * @returns {Promise<{used: number, total: number, available: number}>} Storage usage in bytes
+     */
+    async getStorageInfo(): Promise<{used: number, total: number, available: number}> {
+        const used = await this.calculateTotalStorage();
+        return {
+            used,
+            total: MAX_STORAGE_BYTES,
+            available: MAX_STORAGE_BYTES - used
+        };
+    }
+
 }
 
 export const s3Service = new S3Service();

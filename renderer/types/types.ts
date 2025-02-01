@@ -212,3 +212,16 @@ export interface VideoCarouselProps {
     title: string;
     videos: VideoMetadata[];
 }
+
+/**
+ * Interface defining the structure of storage information
+ * @interface StorageInfo
+ * @property {number} used - Amount of storage currently in use (in bytes)
+ * @property {number} total - Total available storage capacity (in bytes)
+ * @property {number} available - Remaining storage space available (in bytes)
+ */
+export interface StorageInfo {
+    used: number;
+    total: number;
+    available: number;
+}

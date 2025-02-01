@@ -8,6 +8,8 @@ import { getCurrentUser } from 'aws-amplify/auth';
 import { FormData } from '@/types/types'
 import {Hub} from "aws-amplify/utils";
 
+const STORAGE_CHANNEL = 'customStorage';
+
 /**
  * Form component for uploading videos with metadata
  * @component
@@ -45,6 +47,18 @@ const VideoUploadForm: React.FC = () => {
         toast.success('Video file selected successfully');
 
         try {
+            const withinLimit = await s3Service.checkStorageLimit(file.size);
+            if (!withinLimit) {
+                const storageInfo = await s3Service.getStorageInfo();
+                const availableMB = Math.floor(storageInfo.available / (1024 * 1024));
+                toast.error(`File too large. Only ${availableMB}MB available.`);
+                if (videoInputRef.current) {
+                    videoInputRef.current.value = '';
+                }
+                setVideoFile(null);
+                return;
+            }
+
             const videoUrl = URL.createObjectURL(file);
             const video = document.createElement('video');
             video.preload = 'metadata';
@@ -98,7 +112,6 @@ const VideoUploadForm: React.FC = () => {
             return;
         }
 
-
         setIsUploading(true);
         toast.loading('Starting upload...', { duration: 2000 });
         const uploadToastId = toast.loading('Preparing upload...');
@@ -139,6 +152,10 @@ const VideoUploadForm: React.FC = () => {
             Hub.dispatch('videos', {
                 event: 'videoUploaded',
                 data: { videoId }
+            });
+
+            Hub.dispatch(STORAGE_CHANNEL, {
+                event: 'storageUpdated'
             });
 
             setFormData({
