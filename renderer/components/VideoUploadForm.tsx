@@ -36,6 +36,38 @@ const VideoUploadForm: React.FC = () => {
     ];
 
     /**
+     * List of allowed video formats with their MIME types and extensions
+     */
+    const ALLOWED_VIDEO_FORMATS = {
+        'video/mp4': ['.mp4'],
+        'video/webm': ['.webm'],
+        'video/x-matroska': ['.mkv'],
+        'video/quicktime': ['.mov'],
+        'video/x-msvideo': ['.avi'],
+        'video/x-ms-wmv': ['.wmv'],
+        'video/x-flv': ['.flv']
+    };
+
+    /**
+     * Validates if the file is an acceptable video format
+     * @param {File} file - The file to validate
+     * @returns {boolean} Whether the file format is valid
+     */
+    const isValidVideoFormat = (file: File): boolean => {
+        // Check MIME type
+        const mimeType = file.type;
+        if (!Object.keys(ALLOWED_VIDEO_FORMATS).includes(mimeType)) {
+
+            const fileName = file.name.toLowerCase();
+            const extension = '.' + fileName.split('.').pop();
+            return Object.values(ALLOWED_VIDEO_FORMATS)
+                .flat()
+                .includes(extension);
+        }
+        return true;
+    };
+
+    /**
      * Handles video file upload and metadata extraction
      * @param {ChangeEvent<HTMLInputElement>} e - The file input change event
      */
@@ -43,8 +75,14 @@ const VideoUploadForm: React.FC = () => {
         const file = e.target.files?.[0];
         if (!file) return;
 
-        setVideoFile(file);
-        toast.success('Video file selected successfully');
+        if (!isValidVideoFormat(file)) {
+            toast.error('Invalid video format. Allowed formats: MP4, WebM, MKV, MOV, AVI, WMV, FLV');
+            if (videoInputRef.current) {
+                videoInputRef.current.value = '';
+            }
+            setVideoFile(null);
+            return;
+        }
 
         try {
             const withinLimit = await s3Service.checkStorageLimit(file.size);
@@ -58,6 +96,9 @@ const VideoUploadForm: React.FC = () => {
                 setVideoFile(null);
                 return;
             }
+
+            setVideoFile(file);
+            toast.success('Video file selected successfully');
 
             const videoUrl = URL.createObjectURL(file);
             const video = document.createElement('video');
@@ -78,6 +119,10 @@ const VideoUploadForm: React.FC = () => {
             URL.revokeObjectURL(videoUrl);
         } catch (error) {
             toast.error('Error processing video file');
+            if (videoInputRef.current) {
+                videoInputRef.current.value = '';
+            }
+            setVideoFile(null);
         }
     };
 
@@ -189,6 +234,9 @@ const VideoUploadForm: React.FC = () => {
                     >
                         <Upload className="mx-auto h-8 w-8 text-gray-400" />
                         <p className="mt-1 text-sm">{videoFile ? videoFile.name : 'Click to upload video'}</p>
+                        <p className="mt-1 text-xs text-gray-500">
+                            Supported formats: MP4, WebM, MKV, MOV, AVI, WMV, FLV
+                        </p>
                         <input
                             ref={videoInputRef}
                             type="file"
