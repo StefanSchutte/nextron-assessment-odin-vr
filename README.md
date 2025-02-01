@@ -5,8 +5,8 @@ A video platform feature built with Nextron, Next.js and AWS, allowing users to 
 ## Download Links
 
 ### Option 1: Direct Downloads
-- [Windows Version (144 MB)](https://drive.google.com/file/d/1WSB4kKWAAMP_jzv0-IbPRGix_V0jdA2W/view?usp=drive_link)
-- [Linux Version (179 MB)](https://drive.google.com/file/d/1UPiREfzgmbBDdvlWB6YGYs5b2quaO5Ps/view?usp=drive_link)
+- [Windows Version (130 MB)](https://drive.google.com/file/d/1tM6Q3ACNKr-FIWQNFuxD2aGmRLnR-_35/view?usp=drive_link)
+- [Linux Version (160 MB)](https://drive.google.com/file/d/1UgfT7lU9NIqmJg1RNEankWbynHWpN7Dv/view?usp=drive_link)
 
 ### Option 2: Google Drive Folder
 Access all distribution files in our [Google Drive folder](https://drive.google.com/drive/folders/1p7KFYtpc_dWhm9PtvYIliBH_F_tYJdml)
