@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Play } from 'lucide-react';
-import toast from 'react-hot-toast';
 import { VideoCardProps } from '@/types/types'
 import VideoPlaceholder from './VideoPlaceholder';
 
@@ -42,7 +41,10 @@ const VideoCard: React.FC<VideoCardProps> = ({
     };
 
     return (
-        <div className="bg-gray-200 rounded-lg shadow-md overflow-hidden">
+        <div
+            className="bg-gray-200 rounded-lg shadow-md overflow-hidden group cursor-pointer"
+            onClick={onPlay}
+        >
             <div className="relative aspect-video bg-gray-200">
                 {imageLoading && (
                     <div className="absolute inset-0 flex items-center justify-center">
@@ -64,18 +66,21 @@ const VideoCard: React.FC<VideoCardProps> = ({
                         onError={handleImageError}
                     />
                 )}
-                <div className="absolute bottom-2 right-2 bg-black bg-opacity-75 text-white px-2 py-1 rounded text-sm">
+                <div className="absolute bottom-2 right-2 bg-black bg-opacity-75 text-white px-2 py-1 rounded text-sm z-10">
                     {duration}
                 </div>
-                <button
-                    onClick={onPlay}
-                    className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-0 hover:bg-opacity-50 transition-all duration-200 group"
-                >
-                    <Play className="w-16 h-16 opacity-0 group-hover:opacity-100 transition-opacity duration-200" stroke="#22c55e" />
-                </button>
+                <div className="absolute inset-0 flex items-center justify-center bg-gray-950/0 group-hover:bg-gray-950/40 transition-all duration-300">
+                    <Play
+                        className="w-16 h-16 scale-90 opacity-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300"
+                        color="#22c55e"
+                    />
+                </div>
             </div>
+
             <div className="p-4">
-                <h3 className="text-lg font-semibold text-gray-800 truncate">{title}</h3>
+                <h3 className="text-lg font-semibold text-gray-800 truncate group-hover:text-blue-600 transition-colors duration-300">
+                    {title}
+                </h3>
             </div>
         </div>
     );

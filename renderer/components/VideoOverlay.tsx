@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Star, StarHalf, MessageSquare, ThumbsUp, Play } from 'lucide-react';
+import { X, Play } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { ReviewSection } from './ReviewSection';
 import { getCurrentUser } from 'aws-amplify/auth';
@@ -105,28 +105,28 @@ const VideoOverlay: React.FC<VideoOverlayProps> = ({ video, onClose }) => {
                             />
                         ) : (
                             <div
-                                className="w-full h-full cursor-pointer"
+                                className="relative w-full h-full group cursor-pointer"
                                 onClick={handlePlayVideo}
                             >
-                                <div className="relative w-full h-full">
+                                {/* Thumbnail */}
+                                {video.thumbnailUrl ? (
+                                    <img
+                                        src={video.thumbnailUrl}
+                                        alt={video.title}
+                                        className="absolute inset-0 w-full h-full object-contain"
+                                    />
+                                ) : (
+                                    <VideoPlaceholder />
+                                )}
 
-                                    {video.thumbnailUrl ? (
-                                        <img
-                                            src={video.thumbnailUrl}
-                                            alt={video.title}
-                                            className="absolute inset-0 w-full h-full object-contain"
+                                {/* Hover overlay + play button */}
+                                <div className="absolute inset-0 flex items-center justify-center bg-gray-950/0 group-hover:bg-gray-950/40 transition-all duration-300">
+                                    <button className="transform scale-90 opacity-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300">
+                                        <Play
+                                            className="w-16 h-16"
+                                            color="#22c55e"
                                         />
-                                    ) : (
-                                        <VideoPlaceholder />
-                                    )}
-                                    <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-                                        <button className="group">
-                                            <Play
-                                                className="w-16 h-16 opacity-100 transition-opacity duration-200"
-                                                color="#22c55e"
-                                            />
-                                        </button>
-                                    </div>
+                                    </button>
                                 </div>
                             </div>
                         )}
@@ -164,23 +164,21 @@ const VideoOverlay: React.FC<VideoOverlayProps> = ({ video, onClose }) => {
                                 <div className="space-y-4">
                                     <h2 className="text-xl font-bold text-gray-100 break-words">{video.title}</h2>
                                     <div className="space-y-2 text-sm">
-                                        <div className="flex items-center space-x-2">
-                                            <span className="text-gray-400 shrink-0">Date:</span>
+                                        <div className="flex">
+                                            <span className="text-gray-400 w-24">Date:</span>
                                             <span className="text-gray-200">{new Date(video.uploadDate).toLocaleDateString()}</span>
                                         </div>
-                                        <div className="flex items-center space-x-2">
-                                            <span className="text-gray-400 shrink-0">Category:</span>
-                                            <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
-                                                {video.category}
-                                            </span>
+                                        <div className="flex">
+                                            <span className="text-gray-400 w-24">Category:</span>
+                                            <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full">{video.category}</span>
                                         </div>
-                                        <div className="flex items-center space-x-2">
-                                            <span className="text-gray-400 shrink-0">Duration:</span>
+                                        <div className="flex">
+                                            <span className="text-gray-400 w-24">Duration:</span>
                                             <span className="text-gray-200">{video.duration}</span>
                                         </div>
                                     </div>
 
-                                    <div className=" mt-4">
+                                    <div className="mt-4">
                                         <span className="text-gray-400 block mb-2">Description:</span>
                                         <p className="text-gray-200 whitespace-pre-wrap break-words">{video.description}</p>
                                     </div>

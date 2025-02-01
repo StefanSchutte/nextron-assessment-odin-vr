@@ -201,3 +201,14 @@ export interface DeleteVideoProps {
     videoId: string;
     onDelete?: () => void;
 }
+
+/**
+ * Props interface for the VideoCarousel component
+ * @interface VideoCarouselProps
+ * @property {string} title - The title to display above the carousel
+ * @property {VideoMetadata[]} videos - Array of video metadata objects to display in the carousel
+ */
+export interface VideoCarouselProps {
+    title: string;
+    videos: VideoMetadata[];
+}

@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 import { Star, Edit2, Trash2, MessageSquare, X, Plus } from 'lucide-react';
 import { getCurrentUser } from 'aws-amplify/auth';
 import { reviewService } from '@/services/reviewService';
-import { Review, Reply, UpdateReviewData, ReviewSectionProps, StarRatingProps } from '@/types/types'
+import { Review, UpdateReviewData, ReviewSectionProps, StarRatingProps } from '@/types/types'
 
 /**
  * Component for managing and displaying video reviews.
@@ -295,7 +295,7 @@ export const ReviewSection: React.FC<ReviewSectionProps> = ({ videoId, currentUs
                         className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
                     >
                         <Plus className="w-4 h-4" />
-                        <span>Write Review</span>
+                        <span className="sm:inline text-sm whitespace-normal sm:whitespace-nowrap">Write Review</span>
                     </button>
                 )}
             </div>
@@ -450,7 +450,7 @@ export const ReviewSection: React.FC<ReviewSectionProps> = ({ videoId, currentUs
                             </div>
                         ) : (
                             <div className="mt-2">
-                                <p className="text-gray-300">{typeof review.comment === 'string' ? review.comment : ''}</p>
+                                <p className="text-gray-300">{review.comment}</p>
                             </div>
                         )}
 
@@ -459,14 +459,16 @@ export const ReviewSection: React.FC<ReviewSectionProps> = ({ videoId, currentUs
                             {review.replies.map((reply) => (
                                 <div key={reply.id} className="bg-gray-400 p-4 rounded-lg">
                                     <div className="flex justify-between">
-                                        <div className="flex flex-col">
-                                            <span className="font-medium">{reply.userEmail}</span>
+                                        <div className="flex flex-col min-w-0">
+                                            <span className="font-medium truncate break-words overflow-hidden">
+                                                {reply.userEmail}
+                                            </span>
                                             <span className="text-gray-500 text-sm">
                                                 {new Date(reply.createdAt).toLocaleDateString()}
                                             </span>
                                         </div>
                                     </div>
-                                    <p className="text-gray-700 mt-2">{reply.content}</p>
+                                    <p className="text-gray-700 mt-2 whitespace-normal break-words">{reply.content}</p>
                                 </div>
                             ))}
 

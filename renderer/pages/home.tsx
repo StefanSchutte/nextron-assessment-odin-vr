@@ -1,6 +1,5 @@
 import React from 'react'
 import Head from 'next/head'
-import Link from 'next/link'
 import VideoGrid from "@/components/VideoGrid";
 
 /**
@@ -14,7 +13,7 @@ export default function HomePage() {
         <title>Nextron Assessment Odin VR</title>
       </Head>
         <div className="min-h-screen">
-            <div className="w-full pt-14">
+            <div className="w-full pt-12">
             <VideoGrid />
             </div>
         </div>
