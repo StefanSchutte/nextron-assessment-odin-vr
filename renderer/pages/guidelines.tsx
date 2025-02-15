@@ -6,10 +6,6 @@ const Guidelines = () => {
                 <h1 className="text-3xl font-bold mb-8">Nextron Assessment</h1>
 
                 <div className="bg-gray-800 p-6 rounded-lg">
-                    <p>Duration: 10 days from the day the task is received (negotiable upon request).</p>
-                </div>
-
-                <div className="bg-gray-800 p-6 rounded-lg">
                     <h2 className="text-2xl font-semibold mb-4">Objective</h2>
                     <p className="mb-4">Develop a new page in Nextron with the following features:</p>
 

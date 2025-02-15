@@ -10,7 +10,7 @@ export default function HomePage() {
   return (
     <React.Fragment>
       <Head>
-        <title>Nextron Assessment Odin VR</title>
+        <title>Nextron Video Upload App</title>
       </Head>
         <div className="min-h-screen">
             <div className="w-full pt-12">

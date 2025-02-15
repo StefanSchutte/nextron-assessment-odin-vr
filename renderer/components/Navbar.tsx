@@ -80,7 +80,7 @@ const Navbar = () => {
                     {/* Logo */}
                     <div className="flex items-center">
                         <Link href="/guidelines" className="flex items-center">
-                            <span className="text-l font-bold text-white">Nextron Assessment</span>
+                            <span className="text-l font-bold text-white">Nextron Video Upload App</span>
                         </Link>
                     </div>
 
