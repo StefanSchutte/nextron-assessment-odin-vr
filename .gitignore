@@ -15,3 +15,6 @@ dist
 .env.local
 
 *.zip
+dist-linux/
+dist-windows/
+release/
