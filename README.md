@@ -1,4 +1,4 @@
-# Nextron Video-Upload Platform Assessment
+# Nextron Video-Upload Platform
 
 A video platform feature built with Nextron, Next.js and AWS, allowing users to upload, view, rate, and review video content.
 
